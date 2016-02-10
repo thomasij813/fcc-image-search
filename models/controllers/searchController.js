@@ -32,10 +32,13 @@ exports.saveSearch = function(req, res) {
 
 exports.getLatestSearches = function(req, res) {
   Search.find().limit(10).sort({ created_at: -1}).exec(function(err, results) {
-    if (err)
+    if (err) {
       res.send(err);
-    else
-      res.json(results);
+    } else {
+      res.json(results.map(function(searchObj) {
+          return {term: searchObj.search_term, when: searchObj.created_at};
+      }));
+    }
   });
 };
 
