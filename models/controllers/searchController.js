@@ -1,12 +1,32 @@
 var Search = require('../search.js');
+var Bing = require('node-bing-api')({ accKey: process.env.BING_KEY });
 
 exports.saveSearch = function(req, res) {
+  var offset = req.query.offset || 0;
   var searchDoc = new Search({ search_term: req.params.searchTerm});
   searchDoc.save(function(err, savedSearchDoc) {
     if (err)
+      console.log(err);
+    else {
+      console.log('The following search item has been saved to the db: ' + savedSearchDoc._id);
+    }
+  });
+  Bing.images(req.params.searchTerm, {top: 10, skip: offset}, function(err, apiRes, body) {
+    if (err){
       res.send(err);
-    else
-      res.json(savedSearchDoc);
+    } else {
+      var results = body.d.results;
+      res.json(
+        results.map(function(searchObj) {
+          return {
+            url: searchObj.MediaUrl,
+            snippet: searchObj.Title,
+            thumbnail: searchObj.Thumbnail.MediaUrl,
+            context: searchObj.SourceUrl
+          };
+        })
+      );
+    }
   });
 };
 
