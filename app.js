@@ -6,6 +6,8 @@ var indexRoute = require('./routes/index.js');
 
 var app = express();
 
+mongoose.connect('mongodb://localhost/test');
+
 var port = process.env.PORT || 3000;
 
 app.set('views', path.join(__dirname, 'views'));
