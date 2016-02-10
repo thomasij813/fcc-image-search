@@ -4,7 +4,9 @@ var searchController = require('../models/controllers/searchController.js');
 var router = express.Router();
 
 router.get('/', function(req, res) {
-  res.json({ purpose: 'Will return index view' });
+  res.locals.protocol = req.protocol;
+  res.locals.hostname = req.hostname;
+  res.render('index');
 });
 
 router.get('/latest', searchController.getLatestSearches);

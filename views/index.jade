@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title freeCodeCamp URL Shortener
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='stylesheets/style.css')
+  body
+    .container
+      .row
+        h1 FCC API Basejump: Image Search Abstraction Layer
+        hr
+        p This application fulfills the #[a(href="http://www.freecodecamp.com/challenges/image-search-abstraction-layer") fourth API Basejump] as part of Free Code Camp's JavaScript curriculum.
+        h3 Instructions
+        p Send a GET request containing a search term to<code>#{locals.protocol}://#{locals.hostname}/search/#{'<search_term>'}</code> to receive a JSON object containing the results of a Bing image search.
+        p The JSON response is limited to 10 results; however, you may paginate your results by providing an offset query parameter in your initial request. For example, the following code will return a response that skips the first 10 results:
+        p <code>#{locals.protocol}://#{locals.hostname}/search/#{'<search_term>'}?offset=10</code>
+        p You may also send a GET request to<code>#{locals.protocol}://#{locals.hostname}/latest/</code> to receive a JSON object listing the 10 most recent search terms.
+      .row.text-center
+        hr
+        p.text-muted Created by #[a(href="http://thomas-johnson.net/") Thomas Johnson]
+      
+          
