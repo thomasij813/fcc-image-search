@@ -6,27 +6,9 @@ exports.saveSearch = function(req, res) {
   var searchDoc = new Search({ search_term: req.params.searchTerm});
   searchDoc.save(function(err, savedSearchDoc) {
     if (err)
-      console.log(err);
-    else {
-      console.log('The following search item has been saved to the db: ' + savedSearchDoc._id);
-    }
-  });
-  Bing.images(req.params.searchTerm, {top: 10, skip: offset}, function(err, apiRes, body) {
-    if (err){
       res.send(err);
-    } else {
-      var results = body.d.results;
-      res.json(
-        results.map(function(searchObj) {
-          return {
-            url: searchObj.MediaUrl,
-            snippet: searchObj.Title,
-            thumbnail: searchObj.Thumbnail.MediaUrl,
-            context: searchObj.SourceUrl
-          };
-        })
-      );
-    }
+    else
+      bingSearch(req, res, offset);
   });
 };
 
@@ -56,3 +38,23 @@ exports.count = function(req, res) {
         res.json({ count: results});
     });
 };
+
+function bingSearch(req, res, offset) {
+  Bing.images(req.params.searchTerm, {top: 10, skip: offset}, function(err, apiRes, body) {
+    if (err){
+      res.send(err);
+    } else {
+      var results = body.d.results;
+      res.json(
+        results.map(function(searchObj) {
+          return {
+            url: searchObj.MediaUrl,
+            snippet: searchObj.Title,
+            thumbnail: searchObj.Thumbnail.MediaUrl,
+            context: searchObj.SourceUrl
+          };
+        })
+      );
+    }
+  });
+}
