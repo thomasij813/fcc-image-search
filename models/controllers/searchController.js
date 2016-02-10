@@ -24,21 +24,6 @@ exports.getLatestSearches = function(req, res) {
   });
 };
 
-exports.deleteAll = function(req, res) {
-  Search.remove({}, function() {
-    res.send('All documents have been deleted from the db.');
-  });
-};
-
-exports.count = function(req, res) {
-    Search.count({}, function(err, results) {
-      if (err)
-        res.send(err);
-      else
-        res.json({ count: results});
-    });
-};
-
 function bingSearch(req, res, offset) {
   Bing.images(req.params.searchTerm, {top: 10, skip: offset}, function(err, apiRes, body) {
     if (err){

@@ -11,10 +11,6 @@ router.get('/', function(req, res) {
 
 router.get('/latest', searchController.getLatestSearches);
 
-router.get('/deleteAll', searchController.deleteAll);
-
-router.get('/count', searchController.count);
-
 router.get('/search/:searchTerm', searchController.saveSearch);
 
 module.exports = router;
